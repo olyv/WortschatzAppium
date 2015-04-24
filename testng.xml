@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+<suite name="OpenforbetaTestSuite" verbose="1" >
+
+    <test name="AddLessonItemTests" >
+        <classes>
+            <class name="com.olyv.wortschatz.appium.AddNewAdjektiveTest" />
+        </classes>
+    </test>
+
+    <!--<test name="LoginTests" >-->
+        <!--<classes>-->
+            <!--<class name="com.mycompany.openforbeta.tests.LoginTest" />-->
+        <!--</classes>-->
+    <!--</test>-->
+
+</suite>
