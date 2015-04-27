@@ -30,7 +30,7 @@ public class WordManagerTest extends BaseTest
         managerScreen = startScreen.openManager(driver);
         managerScreen.search("12345%^");
 
-        Assert.assertEquals(managerScreen.quantityOfFoundWords(driver), 0);
+        Assert.assertEquals(managerScreen.quantityOfFoundWords(), 0);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class WordManagerTest extends BaseTest
         managerScreen = startScreen.openManager(driver);
         managerScreen.search(uniqueWord);
 
-        Assert.assertEquals(managerScreen.quantityOfFoundWords(driver), 1);
+        Assert.assertEquals(managerScreen.quantityOfFoundWords(), 1);
     }
 
     @Test
@@ -77,11 +77,11 @@ public class WordManagerTest extends BaseTest
         managerScreen = startScreen.openManager(driver);
         managerScreen.search(uniqueWord);
 
-        Assert.assertEquals(managerScreen.quantityOfFoundWords(driver), 1);
+        Assert.assertEquals(managerScreen.quantityOfFoundWords(), 1);
 
         managerScreen.deleteWord(driver);
         managerScreen.search(uniqueWord);
 
-        Assert.assertEquals(managerScreen.quantityOfFoundWords(driver), 0);
+        Assert.assertEquals(managerScreen.quantityOfFoundWords(), 0);
     }
 }

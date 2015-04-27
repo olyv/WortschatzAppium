@@ -17,7 +17,7 @@ public class BaseTest
     @BeforeClass
     public void setUp() throws Exception
     {
-        File app = new File("./resources", "app-debug.apk");
+        File app = new File("./src/main/resources", "app-debug.apk");
 
         DesiredCapabilities capabilities = new DesiredCapabilities().android();
         capabilities.setCapability("deviceName", "foo");//"Nexus 4");

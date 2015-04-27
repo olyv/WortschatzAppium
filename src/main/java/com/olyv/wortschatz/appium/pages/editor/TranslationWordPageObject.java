@@ -15,6 +15,7 @@ public class TranslationWordPageObject extends EditorScreen implements IEditor
     public TranslationWordPageObject enterWord(String word)
     {
         wordField.sendKeys(word);
+        logger.info("entering " + word);
         return this;
     }
 
@@ -22,6 +23,7 @@ public class TranslationWordPageObject extends EditorScreen implements IEditor
     public TranslationWordPageObject enterTranslation(String translation)
     {
         translationField.sendKeys(translation);
+        logger.info("entering " + translation);
         return this;
     }
 
@@ -29,6 +31,7 @@ public class TranslationWordPageObject extends EditorScreen implements IEditor
     public TranslationWordPageObject saveWord()
     {
         saveButton.click();
+        logger.info("saving entered word");
         return this;
     }
 }

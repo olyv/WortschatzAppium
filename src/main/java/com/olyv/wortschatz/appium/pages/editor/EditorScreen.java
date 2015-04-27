@@ -2,12 +2,16 @@ package com.olyv.wortschatz.appium.pages.editor;
 
 import com.olyv.wortschatz.appium.entity.Word;
 import io.appium.java_client.AppiumDriver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class EditorScreen
 {
+    protected static final Logger logger = LogManager.getLogger(EditorScreen.class.getName());
+
     @FindBy(id = "selectTypeSpinner")
     private WebElement wordTypeSpinner;
 
@@ -17,6 +21,7 @@ public class EditorScreen
     public void clickSpinner(AppiumDriver driver)
     {
         wordTypeSpinner.click();
+        logger.info("clicked wordtype spinner");
     }
 
     public IEditor selectSpinnerValue(AppiumDriver driver, String spinnerValue)
@@ -38,6 +43,7 @@ public class EditorScreen
             //TODO: change class
             editorPageObject = PageFactory.initElements(driver, TranslationWordPageObject.class);
         }
+        logger.info("returned " + editorPageObject.getClass().getSimpleName());
         return editorPageObject;
     }
 }
