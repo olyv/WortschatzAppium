@@ -31,8 +31,7 @@ public class EditorScreen
         }
         else if (spinnerValue.equals(Word.VERB_TYPE))
         {
-            //TODO: change class
-            editorPageObject = PageFactory.initElements(driver, TranslationWordPageObject.class);
+            editorPageObject = PageFactory.initElements(driver, VerbWordPageObject.class);
         }
         else if (spinnerValue.equals(Word.NOUN_TYPE))
         {

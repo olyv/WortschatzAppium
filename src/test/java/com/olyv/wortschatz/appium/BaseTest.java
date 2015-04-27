@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import java.io.File;
@@ -19,12 +20,18 @@ public class BaseTest
         File app = new File("./resources", "app-debug.apk");
 
         DesiredCapabilities capabilities = new DesiredCapabilities().android();
-        capabilities.setCapability("deviceName", "Nexus 4");
+        capabilities.setCapability("deviceName", "foo");//"Nexus 4");
         capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("platformVersion", "4.3");
+        capabilities.setCapability("platformVersion", "4.4");
         capabilities.setCapability("app", app.getAbsolutePath());
         capabilities.setCapability("appPackage", "com.olyv.wortschatz.ui");
         capabilities.setCapability("appActivity", ".StartActivity");
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+    }
+
+    @AfterClass
+    public void tearDown() throws Exception
+    {
+        driver.quit();
     }
 }
