@@ -1,6 +1,5 @@
 package com.olyv.wortschatz.appium;
 
-import com.olyv.wortschatz.appium.BaseTest;
 import com.olyv.wortschatz.appium.entity.Word;
 import com.olyv.wortschatz.appium.pages.StartScreen;
 import com.olyv.wortschatz.appium.pages.editor.EditorScreen;
@@ -33,4 +32,6 @@ public class AddNewAdjektiveTest extends BaseTest
 
         Assert.assertTrue(startScreen.assertStartScreenDisplayed());
     }
+
+
 }
