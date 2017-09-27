@@ -4,8 +4,7 @@ import com.olyv.wortschatz.appium.entity.Auxverb;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class VerbWordPageObject extends EditorScreen implements IEditor
-{
+public class VerbWordPageObject extends EditorScreen implements IEditor {
     @FindBy(id = "verb")
     private WebElement wordField;
 
@@ -21,46 +20,35 @@ public class VerbWordPageObject extends EditorScreen implements IEditor
     @FindBy(id = "verbPartizip")
     private WebElement verbPartizip;
 
-    @Override
-    public VerbWordPageObject enterWord(String word)
-    {
+    public VerbWordPageObject enterWord(String word) {
         wordField.sendKeys(word);
         logger.info("entering " + word);
         return this;
     }
 
-    @Override
-    public VerbWordPageObject enterTranslation(String translation)
-    {
+    public VerbWordPageObject enterTranslation(String translation) {
         translationField.sendKeys(translation);
         logger.info("entering " + translation);
         return this;
     }
 
-    public VerbWordPageObject enterPartizip(String partizip)
-    {
+    public VerbWordPageObject enterPartizip(String partizip) {
         verbPartizip.sendKeys(partizip);
         logger.info("entering " + partizip);
         return this;
     }
 
-    public VerbWordPageObject selectAuxVerb(Auxverb auxverb)
-    {
-        if (auxverb == Auxverb.HAT)
-        {
+    public VerbWordPageObject selectAuxVerb(Auxverb auxverb) {
+        if (auxverb == Auxverb.HAT) {
             auxverbHat.click();
-        }
-        else
-        {
+        } else {
             auxverbIst.click();
         }
         logger.info("selected " + auxverb);
         return this;
     }
 
-    @Override
-    public VerbWordPageObject saveWord()
-    {
+    public VerbWordPageObject saveWord() {
         saveButton.click();
         logger.info("saving entered word");
         return this;

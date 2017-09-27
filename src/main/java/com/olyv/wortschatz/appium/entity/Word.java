@@ -1,7 +1,6 @@
 package com.olyv.wortschatz.appium.entity;
 
-public class Word
-{
+public class Word {
     public static final String TRANSLATION_TYPE = "Translation";
     public static final String VERB_TYPE = "Verb";
     public static final String NOUN_TYPE = "Noun";
@@ -17,68 +16,56 @@ public class Word
     private Auxverb auxverb;
     private String partizip;
 
-    public String getWord()
-    {
+    public String getWord() {
         return word;
     }
 
-    public Word setWord(String word)
-    {
+    public Word setWord(String word) {
         this.word = word;
         return this;
     }
 
-    public String getTranslation()
-    {
+    public String getTranslation() {
         return translation;
     }
 
-    public Word setTranslation(String translation)
-    {
+    public Word setTranslation(String translation) {
         this.translation = translation;
         return this;
     }
 
-    public Article getArticle()
-    {
+    public Article getArticle() {
         return article;
     }
 
-    public Word setArticle(Article article)
-    {
+    public Word setArticle(Article article) {
         this.article = article;
         return this;
     }
 
-    public Auxverb getAuxverb()
-    {
+    public Auxverb getAuxverb() {
         return auxverb;
     }
 
-    public Word setAuxverb(Auxverb auxverb)
-    {
+    public Word setAuxverb(Auxverb auxverb) {
         this.auxverb = auxverb;
         return this;
     }
 
-    public String getPlural()
-    {
+    public String getPlural() {
         return plural;
     }
 
-    public Word setPlural(String plural)
-    {
+    public Word setPlural(String plural) {
         this.plural = plural;
         return this;
     }
 
-    public String getPartizip()
-    {
+    public String getPartizip() {
         return partizip;
     }
 
-    public Word setPartizip(String partizip)
-    {
+    public Word setPartizip(String partizip) {
         this.partizip = partizip;
         return this;
     }

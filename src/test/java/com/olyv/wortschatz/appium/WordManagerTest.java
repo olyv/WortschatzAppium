@@ -8,7 +8,6 @@ import com.olyv.wortschatz.appium.pages.editor.TranslationWordPageObject;
 import com.olyv.wortschatz.appium.pages.editor.VerbWordPageObject;
 import com.olyv.wortschatz.appium.pages.manager.ListOfWordsScreen;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
@@ -17,6 +16,7 @@ import java.util.Calendar;
 import static org.testng.Assert.assertEquals;
 
 public class WordManagerTest extends BaseTest {
+    private static final String SOME_NON_EXISTING_WORD = "12345%^";
     private StartScreen startScreen;
     private ListOfWordsScreen managerScreen;
     private EditorScreen editorScreen;
@@ -25,60 +25,80 @@ public class WordManagerTest extends BaseTest {
 
     @Test
     public void testSearchNonExistingWord() throws Exception {
-        startScreen = PageFactory.initElements(driver, StartScreen.class);
-        managerScreen = startScreen.openManager(driver);
-        managerScreen.search("12345%^");
+        whenManagerScreenIsOpened();
 
-        assertEquals(managerScreen.quantityOfFoundWords(), 0);
+        assertThatSearchReturnedNumberOfWords(0, SOME_NON_EXISTING_WORD);
     }
 
     @Test
     public void testSearchSingleWord() {
-        String uniqueWord = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-        Word newAdjektive = new Word()
-                .setWord(uniqueWord)
-                .setTranslation(uniqueWord);
+        Word givenAdjective = givenAdjective();
 
+        whenAdjectiveIsAddedViaEditor(givenAdjective);
+        whenManagerScreenIsOpened();
+
+        assertThatSearchReturnedNumberOfWords(1, givenAdjective.getWord());
+    }
+
+    @Test
+    public void testDeleteWord() {
+        Word givenVerbWord = givenVerb();
+
+        whenVerbIsAddedViaEditor(givenVerbWord);
+        whenManagerScreenIsOpened();
+
+        assertThatSearchReturnedNumberOfWords(1, givenVerbWord.getWord());
+
+        managerScreen.deleteWord(driver);
+        assertThatSearchReturnedNumberOfWords(0, givenVerbWord.getWord());
+    }
+
+    private void whenManagerScreenIsOpened() {
+        startScreen = PageFactory.initElements(driver, StartScreen.class);
+        managerScreen = startScreen.openManager(driver);
+    }
+
+    private void whenAdjectiveIsAddedViaEditor(Word adjective){
         startScreen = PageFactory.initElements(driver, StartScreen.class);
         editorScreen = startScreen.openEditor(driver);
         editorScreen.clickSpinner(driver);
         translationWordEditor = (TranslationWordPageObject) editorScreen
                 .selectSpinnerValue(driver, Word.TRANSLATION_TYPE)
-                .enterWord(newAdjektive.getWord())
-                .enterTranslation(newAdjektive.getTranslation())
+                .enterWord(adjective.getWord())
+                .enterTranslation(adjective.getTranslation())
                 .saveWord();
-        managerScreen = startScreen.openManager(driver);
-        managerScreen.search(uniqueWord);
-
-        assertEquals(managerScreen.quantityOfFoundWords(), 1);
     }
 
-    @Test
-    public void testDeleteWord() {
-        String uniqueWord = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-        Word newVerb = new Word()
-                .setWord(uniqueWord)
-                .setTranslation(uniqueWord)
-                .setAuxverb(Auxverb.HAT)
-                .setPartizip(uniqueWord);
-
+    private void whenVerbIsAddedViaEditor(Word verb){
         startScreen = PageFactory.initElements(driver, StartScreen.class);
         editorScreen = startScreen.openEditor(driver);
         editorScreen.clickSpinner(driver);
         verbWordPageObject = (VerbWordPageObject) editorScreen.selectSpinnerValue(driver, Word.VERB_TYPE);
-        verbWordPageObject.enterWord(newVerb.getWord())
-                .enterPartizip(newVerb.getPartizip())
-                .selectAuxVerb(newVerb.getAuxverb())
-                .enterTranslation(newVerb.getTranslation())
+        verbWordPageObject.enterWord(verb.getWord())
+                .enterPartizip(verb.getPartizip())
+                .selectAuxVerb(verb.getAuxverb())
+                .enterTranslation(verb.getTranslation())
                 .saveWord();
-        managerScreen = startScreen.openManager(driver);
-        managerScreen.search(uniqueWord);
+    }
 
-        assertEquals(managerScreen.quantityOfFoundWords(), 1);
+    private Word givenAdjective() {
+        String uniqueWord = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        return new Word()
+                .setWord(uniqueWord)
+                .setTranslation(uniqueWord);
+    }
 
-        managerScreen.deleteWord(driver);
-        managerScreen.search(uniqueWord);
+    private Word givenVerb() {
+        String uniqueWord = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        return new Word()
+                .setWord(uniqueWord)
+                .setTranslation(uniqueWord)
+                .setAuxverb(Auxverb.HAT)
+                .setPartizip(uniqueWord);
+    }
 
-        assertEquals(managerScreen.quantityOfFoundWords(), 0);
+    private void assertThatSearchReturnedNumberOfWords(int expectedNumberOdFoundWords, String word) {
+        managerScreen.search(word);
+        assertEquals(managerScreen.quantityOfFoundWords(), expectedNumberOdFoundWords);
     }
 }
