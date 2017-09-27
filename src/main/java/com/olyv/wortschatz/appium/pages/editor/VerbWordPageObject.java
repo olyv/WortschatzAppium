@@ -22,19 +22,16 @@ public class VerbWordPageObject extends EditorScreen implements IEditor {
 
     public VerbWordPageObject enterWord(String word) {
         wordField.sendKeys(word);
-        logger.info("entering " + word);
         return this;
     }
 
     public VerbWordPageObject enterTranslation(String translation) {
         translationField.sendKeys(translation);
-        logger.info("entering " + translation);
         return this;
     }
 
     public VerbWordPageObject enterPartizip(String partizip) {
         verbPartizip.sendKeys(partizip);
-        logger.info("entering " + partizip);
         return this;
     }
 
@@ -44,13 +41,11 @@ public class VerbWordPageObject extends EditorScreen implements IEditor {
         } else {
             auxverbIst.click();
         }
-        logger.info("selected " + auxverb);
         return this;
     }
 
     public VerbWordPageObject saveWord() {
         saveButton.click();
-        logger.info("saving entered word");
         return this;
     }
 }
