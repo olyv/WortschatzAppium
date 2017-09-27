@@ -5,19 +5,18 @@ import com.olyv.wortschatz.appium.pages.StartScreen;
 import com.olyv.wortschatz.appium.pages.editor.EditorScreen;
 import com.olyv.wortschatz.appium.pages.editor.TranslationWordPageObject;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class AddNewAdjektiveTest extends BaseTest
-{
+import static org.testng.Assert.assertTrue;
+
+public class AddNewAdjectiveTest extends BaseTest {
     private StartScreen startScreen;
     private EditorScreen editorScreen;
     private TranslationWordPageObject translationWordEditor;
 
     @Test
-    public void testAddNewAdjektive() throws Exception
-    {
-        Word newAdjektive = new Word()
+    public void testAddNewAdjective() throws Exception {
+        Word newAdjective = new Word()
                 .setWord("testAdj")
                 .setTranslation("testTransl");
 
@@ -25,13 +24,11 @@ public class AddNewAdjektiveTest extends BaseTest
         editorScreen = startScreen.openEditor(driver);
         editorScreen.clickSpinner(driver);
         translationWordEditor = (TranslationWordPageObject) editorScreen
-                    .selectSpinnerValue(driver, Word.TRANSLATION_TYPE)
-                    .enterWord(newAdjektive.getWord())
-                    .enterTranslation(newAdjektive.getTranslation())
-                    .saveWord();
+                .selectSpinnerValue(driver, Word.TRANSLATION_TYPE)
+                .enterWord(newAdjective.getWord())
+                .enterTranslation(newAdjective.getTranslation())
+                .saveWord();
 
-        Assert.assertTrue(startScreen.assertStartScreenDisplayed());
+        assertTrue(startScreen.assertStartScreenDisplayed());
     }
-
-
 }

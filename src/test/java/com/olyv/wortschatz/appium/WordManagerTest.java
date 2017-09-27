@@ -1,6 +1,5 @@
 package com.olyv.wortschatz.appium;
 
-import com.olyv.wortschatz.appium.entity.Article;
 import com.olyv.wortschatz.appium.entity.Auxverb;
 import com.olyv.wortschatz.appium.entity.Word;
 import com.olyv.wortschatz.appium.pages.StartScreen;
@@ -15,8 +14,9 @@ import org.testng.annotations.Test;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class WordManagerTest extends BaseTest
-{
+import static org.testng.Assert.assertEquals;
+
+public class WordManagerTest extends BaseTest {
     private StartScreen startScreen;
     private ListOfWordsScreen managerScreen;
     private EditorScreen editorScreen;
@@ -24,18 +24,16 @@ public class WordManagerTest extends BaseTest
     private VerbWordPageObject verbWordPageObject;
 
     @Test
-    public void testSearchNonExistingWord() throws Exception
-    {
+    public void testSearchNonExistingWord() throws Exception {
         startScreen = PageFactory.initElements(driver, StartScreen.class);
         managerScreen = startScreen.openManager(driver);
         managerScreen.search("12345%^");
 
-        Assert.assertEquals(managerScreen.quantityOfFoundWords(), 0);
+        assertEquals(managerScreen.quantityOfFoundWords(), 0);
     }
 
     @Test
-    public void testSearchSingleWord()
-    {
+    public void testSearchSingleWord() {
         String uniqueWord = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
         Word newAdjektive = new Word()
                 .setWord(uniqueWord)
@@ -52,12 +50,11 @@ public class WordManagerTest extends BaseTest
         managerScreen = startScreen.openManager(driver);
         managerScreen.search(uniqueWord);
 
-        Assert.assertEquals(managerScreen.quantityOfFoundWords(), 1);
+        assertEquals(managerScreen.quantityOfFoundWords(), 1);
     }
 
     @Test
-    public void testDeleteWord()
-    {
+    public void testDeleteWord() {
         String uniqueWord = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
         Word newVerb = new Word()
                 .setWord(uniqueWord)
@@ -70,18 +67,18 @@ public class WordManagerTest extends BaseTest
         editorScreen.clickSpinner(driver);
         verbWordPageObject = (VerbWordPageObject) editorScreen.selectSpinnerValue(driver, Word.VERB_TYPE);
         verbWordPageObject.enterWord(newVerb.getWord())
-                        .enterPartizip(newVerb.getPartizip())
-                        .selectAuxVerb(newVerb.getAuxverb())
-                        .enterTranslation(newVerb.getTranslation())
-                        .saveWord();
+                .enterPartizip(newVerb.getPartizip())
+                .selectAuxVerb(newVerb.getAuxverb())
+                .enterTranslation(newVerb.getTranslation())
+                .saveWord();
         managerScreen = startScreen.openManager(driver);
         managerScreen.search(uniqueWord);
 
-        Assert.assertEquals(managerScreen.quantityOfFoundWords(), 1);
+        assertEquals(managerScreen.quantityOfFoundWords(), 1);
 
         managerScreen.deleteWord(driver);
         managerScreen.search(uniqueWord);
 
-        Assert.assertEquals(managerScreen.quantityOfFoundWords(), 0);
+        assertEquals(managerScreen.quantityOfFoundWords(), 0);
     }
 }

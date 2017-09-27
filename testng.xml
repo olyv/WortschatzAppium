@@ -3,7 +3,7 @@
 
     <test name="AddLessonItemTests" >
         <classes>
-            <class name="com.olyv.wortschatz.appium.AddNewAdjektiveTest" />
+            <class name="com.olyv.wortschatz.appium.AddNewAdjectiveTest" />
         </classes>
     </test>
 
