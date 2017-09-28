@@ -20,10 +20,6 @@ public class BaseTest {
     private static final String APK_NAME = "app-debug.apk";
     private static final String DEVICE_NAME_CAPABILITY = "deviceName";
     private static final String DEVICE_NAME_VALUE = "3204a166cff0b197";
-    private static final String PLATFORM_NAME_CAPABILITY = "platformName";
-    private static final String PLATFORM_NAME_VALUE = "android";
-    private static final String PLATFORM_VERSION_CAPABILITY = "platformVersion";
-    private static final String PLATFORM_VERSION = "6.0.1";
     private static final String APP_PACKAGE_CAPABILITY = "appPackage";
     private static final String APP_PACKAGE_VALUE = "com.olyv.wortschatz.ui";
     private static final String APP_ACTIVITY_CAPABILITY = "appActivity";
@@ -54,13 +50,13 @@ public class BaseTest {
     }
 
     private AppiumDriver getAndroidDriver() throws Exception {
-        AndroidDriver androidDriver= new AndroidDriver(new URL(DRIVER_REMOTE_ADDRESS), getAndroidCapabilities());
+        AndroidDriver androidDriver = new AndroidDriver(new URL(DRIVER_REMOTE_ADDRESS), getAndroidCapabilities());
         androidDriver.manage().timeouts().implicitlyWait(DRIVER_IMPLICIT_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS);
         return androidDriver;
     }
 
     private void startAppiumServerIfNotRunning(AppiumDriverLocalService appiumService) {
-        if(!appiumService.isRunning()) {
+        if (!appiumService.isRunning()) {
             appiumService.start();
         }
     }
@@ -68,8 +64,6 @@ public class BaseTest {
     private DesiredCapabilities getAndroidCapabilities() {
         DesiredCapabilities capabilities = android();
         capabilities.setCapability(DEVICE_NAME_CAPABILITY, DEVICE_NAME_VALUE);
-        capabilities.setCapability(PLATFORM_NAME_CAPABILITY, PLATFORM_NAME_VALUE);
-        capabilities.setCapability(PLATFORM_VERSION_CAPABILITY, PLATFORM_VERSION);
         capabilities.setCapability(APPLICATION_FILE_CAPABILITY, APPLICATION_FILE.getAbsolutePath());
         capabilities.setCapability(APP_PACKAGE_CAPABILITY, APP_PACKAGE_VALUE);
         capabilities.setCapability(APP_ACTIVITY_CAPABILITY, APP_ACTIVITY_VALUE);
