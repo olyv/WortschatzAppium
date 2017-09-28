@@ -22,12 +22,12 @@ public class AddNewAdjectiveTest extends BaseTest {
 
         startScreen = PageFactory.initElements(driver, StartScreen.class);
         editorScreen = startScreen.openEditor(driver);
-        editorScreen.clickSpinner(driver);
+        editorScreen.clickSpinner();
         translationWordEditor = (TranslationWordPageObject) editorScreen
                 .selectSpinnerValue(driver, Word.TRANSLATION_TYPE)
                 .enterWord(newAdjective.getWord())
                 .enterTranslation(newAdjective.getTranslation())
-                .saveWord();
+                .saveWord(driver);
 
         assertTrue(startScreen.assertStartScreenDisplayed());
     }

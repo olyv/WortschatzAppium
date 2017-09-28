@@ -1,6 +1,7 @@
 package com.olyv.wortschatz.appium.pages.editor;
 
 import com.olyv.wortschatz.appium.entity.Auxverb;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -44,7 +45,8 @@ public class VerbWordPageObject extends EditorScreen implements IEditor {
         return this;
     }
 
-    public VerbWordPageObject saveWord() {
+    public VerbWordPageObject saveWord(AppiumDriver driver) {
+        driver.hideKeyboard();
         saveButton.click();
         return this;
     }
