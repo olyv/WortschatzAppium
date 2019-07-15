@@ -7,10 +7,4 @@
         </classes>
     </test>
 
-    <!--<test name="LoginTests" >-->
-        <!--<classes>-->
-            <!--<class name="com.mycompany.openforbeta.tests.LoginTest" />-->
-        <!--</classes>-->
-    <!--</test>-->
-
 </suite>

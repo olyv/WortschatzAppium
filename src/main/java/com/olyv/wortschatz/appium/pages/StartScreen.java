@@ -1,8 +1,8 @@
 package com.olyv.wortschatz.appium.pages;
 
 import com.olyv.wortschatz.appium.pages.editor.EditorScreen;
-import com.olyv.wortschatz.appium.pages.manager.ListOfWordsScreen;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -18,22 +18,22 @@ public class StartScreen {
     @FindBy(id = "settings")
     private WebElement settingsActionBarMenu;
 
+    public static StartScreen init(AppiumDriver driver) {
+        var startScreen = new StartScreen();
+        PageFactory.initElements(new AppiumFieldDecorator(driver), startScreen);
+        return startScreen;
+    }
+
     public EditorScreen openEditor(AppiumDriver driver) {
         newWordButton.click();
-        return PageFactory.initElements(driver, EditorScreen.class);
+        return EditorScreen.init(driver);
     }
 
-    public boolean assertStartScreenDisplayed() {
-        try {
-            return settingsActionBarMenu.isDisplayed();
-        } catch (org.openqa.selenium.NoSuchElementException e) {
-            e.printStackTrace();
-            return false;
-        }
+    public boolean isStartScreenDisplayed() {
+        return settingsActionBarMenu.isDisplayed();
     }
 
-    public ListOfWordsScreen openManager(AppiumDriver driver) {
+    public void openManager() {
         manageWordsButton.click();
-        return PageFactory.initElements(driver, ListOfWordsScreen.class);
     }
 }

@@ -1,6 +1,6 @@
 package com.olyv.wortschatz.appium.entity;
 
-public enum Auxverb
-{
-    HAT, IST;
+public enum Auxverb {
+    HAT,
+    IST
 }

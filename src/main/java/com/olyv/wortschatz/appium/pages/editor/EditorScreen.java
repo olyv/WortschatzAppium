@@ -1,47 +1,64 @@
 package com.olyv.wortschatz.appium.pages.editor;
 
-import com.olyv.wortschatz.appium.entity.Word;
+import com.olyv.wortschatz.appium.entity.WordType;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.List;
+import java.util.Map;
+import java.util.function.BiPredicate;
+import java.util.function.Supplier;
+
+import static com.olyv.wortschatz.appium.entity.WordType.TRANSLATION;
+import static com.olyv.wortschatz.appium.entity.WordType.VERB;
 
 public class EditorScreen {
+
     @FindBy(id = "saveBtn")
-    WebElement saveButton;
+    MobileElement saveButton;
 
     @FindBy(id = "selectTypeSpinner")
-    private WebElement wordTypeSpinner;
+    private MobileElement wordTypeSpinner;
+
+    public static EditorScreen init(AppiumDriver driver) {
+        var editorScreen = new EditorScreen();
+        PageFactory.initElements(new AppiumFieldDecorator(driver), editorScreen);
+        return editorScreen;
+    }
+
+    private final BiPredicate<WebElement, String> isElementWithText = (element, text)-> element.getText().equalsIgnoreCase(text);
 
     public void clickSpinner() {
         wordTypeSpinner.click();
     }
 
-    public IEditor selectSpinnerValue(AppiumDriver driver, String spinnerValue) {
+    public IEditor selectSpinnerValue(AppiumDriver driver, WordType spinnerValue) {
 
-        List<WebElement> spinnerEntries = driver
+        var spinnerEntries = driver
                 .findElement(By.className("android.widget.ListView"))
                 .findElements(By.className("android.widget.TextView"));
 
-        for (WebElement entry : spinnerEntries) {
-            if (entry.getText().equalsIgnoreCase(spinnerValue)) {
-                entry.click();
-            }
-        }
+        spinnerEntries.stream()
+                .filter(element -> isElementWithText.test(element, spinnerValue.toString()))
+                .findFirst()
+                .orElseThrow()
+                .click();
 
-        IEditor editorPageObject = null;
+        return getFragmentInstance(driver, spinnerValue);
+    }
 
-        if (spinnerValue.equals(Word.TRANSLATION_TYPE)) {
-            editorPageObject = PageFactory.initElements(driver, TranslationWordPageObject.class);
-        } else if (spinnerValue.equals(Word.VERB_TYPE)) {
-            editorPageObject = PageFactory.initElements(driver, VerbWordPageObject.class);
-        } else if (spinnerValue.equals(Word.NOUN_TYPE)) {
-            //TODO: change class
-            editorPageObject = PageFactory.initElements(driver, TranslationWordPageObject.class);
-        }
-        return editorPageObject;
+    private IEditor getFragmentInstance(AppiumDriver driver, WordType type) {
+        Map<WordType, Supplier<IEditor>> init = Map.of(
+                TRANSLATION, TranslationWordPageObject::new,
+                VERB, VerbWordPageObject::new
+        );
+
+        IEditor fragment = init.get(type).get();
+        PageFactory.initElements(new AppiumFieldDecorator(driver), fragment);
+        return fragment;
     }
 }
