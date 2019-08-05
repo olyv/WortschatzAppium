@@ -18,9 +18,9 @@ import static com.olyv.wortschatz.appium.entity.WordType.VERB;
 
 public class EditorScreen {
 
+    private final BiPredicate<WebElement, String> isElementWithText = (element, text) -> element.getText().equalsIgnoreCase(text);
     @FindBy(id = "saveBtn")
     MobileElement saveButton;
-
     @FindBy(id = "selectTypeSpinner")
     private MobileElement wordTypeSpinner;
 
@@ -29,8 +29,6 @@ public class EditorScreen {
         PageFactory.initElements(new AppiumFieldDecorator(driver), editorScreen);
         return editorScreen;
     }
-
-    private final BiPredicate<WebElement, String> isElementWithText = (element, text)-> element.getText().equalsIgnoreCase(text);
 
     public void clickSpinner() {
         wordTypeSpinner.click();
@@ -43,7 +41,7 @@ public class EditorScreen {
                 .findElements(By.className("android.widget.TextView"));
 
         spinnerEntries.stream()
-                .filter(element -> isElementWithText.test(element, spinnerValue.toString()))
+                .filter(element -> isElementWithText.test(element, spinnerValue.getSpinnerValueInEditor()))
                 .findFirst()
                 .orElseThrow()
                 .click();
