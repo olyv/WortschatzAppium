@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Map;
 
 import static org.testng.Assert.assertEquals;
 
@@ -49,16 +50,21 @@ public class WordManagerTest extends BaseTest {
     }
 
     private void wordIsAddedViaEditor(WordType type) {
-        switch (type) {
-            case ADJECTIVE:
-                someAdjective = getSomeAdjective();
-                adjectiveIsAddedViaEditor(someAdjective);
-                break;
-            case VERB:
-                someVerb = getSomeVerb();
-                addVerbViaEditor(someVerb);
-                break;
-        }
+        Map<WordType, Action> wordTypeTostrategy = Map.of(
+                WordType.ADJECTIVE, this::addAdjectiveViaEditor,
+                WordType.VERB, this::addVerbViaEditor
+        );
+        wordTypeTostrategy.get(type).execute();
+    }
+
+    private void addAdjectiveViaEditor() {
+        someAdjective = getSomeAdjective();
+        addAdjectiveViaEditor(someAdjective);
+    }
+
+    private void addVerbViaEditor() {
+        someVerb = getSomeVerb();
+        addVerbViaEditor(someVerb);
     }
 
     private void openEditor() {
@@ -67,7 +73,7 @@ public class WordManagerTest extends BaseTest {
         this.editorScreen.clickSpinner();
     }
 
-    private void adjectiveIsAddedViaEditor(Word adjective) {
+    private void addAdjectiveViaEditor(Word adjective) {
         openEditor();
         this.adjectivePageObject = (AdjectivePageObject) this.editorScreen.selectSpinnerValue(driver, WordType.ADJECTIVE);
         this.adjectivePageObject.enterWord(adjective.getWord());
