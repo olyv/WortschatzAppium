@@ -27,9 +27,7 @@ public class WordManagerTest extends BaseTest {
     @Test
     public void testSearchNonExistingWord() {
         givenManagerScreenIsOpened();
-
         whenSearchForWord(SOME_NON_EXISTING_WORD);
-
         thenSearchReturnedNumberOfWords(0);
     }
 
@@ -37,60 +35,53 @@ public class WordManagerTest extends BaseTest {
     public void testSearchSingleWord() {
         var someAdjective = getSomeAdjective();
         givenAdjectiveIsAddedViaEditor(someAdjective);
-
         givenManagerScreenIsOpened();
-
         whenSearchForWord(someAdjective.getWord());
-
         thenSearchReturnedNumberOfWords(1);
     }
 
     @Test
     public void testDeleteWord() {
         var someVerb = getSomeVerb();
-
         givenVerbIsAddedViaEditor(someVerb);
-
         whenWordDeletedAfterSearch(someVerb);
-
         thenSearchReturnedNumberOfWords(0);
     }
 
     private void whenWordDeletedAfterSearch(Word word) {
-        startScreen.openManager();
-        managerScreen = ListOfWordsScreen.init(driver);
-        managerScreen.search(word.getWord());
-        managerScreen.deleteWord(driver);
+        this.startScreen.openManager();
+        this.managerScreen = ListOfWordsScreen.init(driver);
+        this.managerScreen.search(word.getWord());
+        this.managerScreen.deleteWord(driver);
     }
 
     private void givenManagerScreenIsOpened() {
-        StartScreen.init(driver);
-        startScreen.openManager();
+        this.startScreen = StartScreen.init(driver);
+        this.startScreen.openManager();
         this.managerScreen = ListOfWordsScreen.init(driver);
     }
 
     private void givenAdjectiveIsAddedViaEditor(Word adjective){
         StartScreen.init(driver);
-        editorScreen = startScreen.openEditor(driver);
-        editorScreen.clickSpinner();
-        adjectivePageObject = (AdjectivePageObject) editorScreen
-                .selectSpinnerValue(driver, WordType.ADJECTIVE)
-                .enterWord(adjective.getWord())
-                .enterTranslation(adjective.getTranslation())
-                .saveWord();
+        this.editorScreen = startScreen.openEditor(driver);
+        this.editorScreen.clickSpinner();
+        this.adjectivePageObject = (AdjectivePageObject) editorScreen.selectSpinnerValue(driver, WordType.ADJECTIVE);
+        this.adjectivePageObject.enterWord(adjective.getWord());
+        this.adjectivePageObject.enterTranslation(adjective.getTranslation());
+        this.adjectivePageObject.saveWord();
     }
 
     private void givenVerbIsAddedViaEditor(Verb verb){
-        startScreen = StartScreen.init(driver);
-        editorScreen = startScreen.openEditor(driver);
+        this.startScreen = StartScreen.init(driver);
+        this.editorScreen = this.startScreen.openEditor(driver);
 
-        editorScreen.clickSpinner();
-        verbPageObject = (VerbPageObject) editorScreen.selectSpinnerValue(driver, WordType.VERB);
-        verbPageObject.enterWord(verb.getWord())
-                .enterTranslation(verb.getTranslation())
-                .enterPartizip(verb.getPartizip())
-                .selectAuxVerb(verb.getAuxverb())
-                .saveWord();
+        this.editorScreen.clickSpinner();
+        this.verbPageObject = (VerbPageObject) editorScreen.selectSpinnerValue(driver, WordType.VERB);
+        this.verbPageObject.enterWord(verb.getWord());
+        this.verbPageObject.enterTranslation(verb.getTranslation());
+        this.verbPageObject.enterPartizip(verb.getPartizip());
+        this.verbPageObject.selectAuxVerb(verb.getAuxverb());
+        this.verbPageObject.saveWord();
     }
 
     private Word getSomeAdjective() {
@@ -110,10 +101,10 @@ public class WordManagerTest extends BaseTest {
     }
 
     private void whenSearchForWord(String word) {
-        managerScreen.search(word);
+        this.managerScreen.search(word);
     }
 
     private void thenSearchReturnedNumberOfWords(int expectedNumberOdFoundWords) {
-        assertEquals(managerScreen.quantityOfFoundWords(), expectedNumberOdFoundWords);
+        assertEquals(this.managerScreen.quantityOfFoundWords(), expectedNumberOdFoundWords);
     }
 }

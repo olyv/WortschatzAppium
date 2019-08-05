@@ -29,7 +29,7 @@ public class StartScreen {
         return EditorScreen.init(driver);
     }
 
-    public boolean isStartScreenDisplayed() {
+    public boolean isScreenDisplayed() {
         return settingsActionBarMenu.isDisplayed();
     }
 

@@ -10,21 +10,35 @@ import static org.testng.Assert.assertTrue;
 
 public class AddNewAdjectiveTest extends BaseTest {
 
+    private StartScreen startScreen;
+    private EditorScreen editorScreen;
+
     @Test
     public void testAddNewAdjective() {
-        Word newAdjective = new Word()
+        goFromHomeScreenToEditor();
+        enterAndSaveAdjective();
+        assertTrue(this.startScreen.isScreenDisplayed());
+    }
+
+    private Word getSomeAdjective() {
+        return new Word()
                 .setWord("testAdj")
                 .setTranslation("testTransl");
+    }
 
-        var startScreen = StartScreen.init(driver);
-        startScreen.openEditor(driver);
-        var editorScreen = EditorScreen.init(driver);
+    private void goFromHomeScreenToEditor() {
+        this.startScreen = StartScreen.init(driver);
+        this.startScreen.openEditor(driver);
+        this.editorScreen = EditorScreen.init(driver);
+    }
+
+    private void enterAndSaveAdjective() {
         editorScreen.clickSpinner();
-        editorScreen.selectSpinnerValue(driver, WordType.ADJECTIVE)
-                .enterWord(newAdjective.getWord())
-                .enterTranslation(newAdjective.getTranslation())
-                .saveWord();
+        var adjectivePageObject = editorScreen.selectSpinnerValue(driver, WordType.ADJECTIVE);
+        var adjective = getSomeAdjective();
+        adjectivePageObject.enterWord(adjective.getWord());
+        adjectivePageObject.enterTranslation(adjective.getTranslation());
+        adjectivePageObject.saveWord();
 
-        assertTrue(startScreen.isStartScreenDisplayed());
     }
 }
