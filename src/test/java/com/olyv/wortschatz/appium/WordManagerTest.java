@@ -56,18 +56,6 @@ public class WordManagerTest extends BaseTest {
         thenSearchReturnedNumberOfWords(0);
     }
 
-    private void givenWordIsAddedViEditor(WordType type) {
-
-        switch (type) {
-            case ADJECTIVE:
-                break;
-            case VERB:
-                break;
-            case NOUN:
-                break;
-        }
-    }
-
     private void whenWordDeletedAfterSearch(Word word) {
         startScreen.openManager();
         managerScreen = ListOfWordsScreen.init(driver);
