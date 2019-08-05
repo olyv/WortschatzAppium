@@ -52,7 +52,7 @@ public class WordManagerTest extends BaseTest {
         switch (type) {
             case ADJECTIVE:
                 someAdjective = getSomeAdjective();
-                adjectiveIsAddedViaEditor(someAdjective);
+                addAdjectiveViaEditor(someAdjective);
                 break;
             case VERB:
                 someVerb = getSomeVerb();
@@ -67,7 +67,7 @@ public class WordManagerTest extends BaseTest {
         this.editorScreen.clickSpinner();
     }
 
-    private void adjectiveIsAddedViaEditor(Word adjective) {
+    private void addAdjectiveViaEditor(Word adjective) {
         openEditor();
         this.adjectivePageObject = (AdjectivePageObject) this.editorScreen.selectSpinnerValue(driver, WordType.ADJECTIVE);
         this.adjectivePageObject.enterWord(adjective.getWord());
