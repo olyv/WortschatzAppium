@@ -20,7 +20,7 @@ public class AddNewAdjectiveTest extends BaseTest {
         startScreen.openEditor(driver);
         var editorScreen = EditorScreen.init(driver);
         editorScreen.clickSpinner();
-        editorScreen.selectSpinnerValue(driver, WordType.TRANSLATION)
+        editorScreen.selectSpinnerValue(driver, WordType.ADJECTIVE)
                 .enterWord(newAdjective.getWord())
                 .enterTranslation(newAdjective.getTranslation())
                 .saveWord();

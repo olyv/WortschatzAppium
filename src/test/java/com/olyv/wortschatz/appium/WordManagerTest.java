@@ -6,8 +6,8 @@ import com.olyv.wortschatz.appium.entity.Word;
 import com.olyv.wortschatz.appium.entity.WordType;
 import com.olyv.wortschatz.appium.pages.StartScreen;
 import com.olyv.wortschatz.appium.pages.editor.EditorScreen;
-import com.olyv.wortschatz.appium.pages.editor.TranslationWordPageObject;
-import com.olyv.wortschatz.appium.pages.editor.VerbWordPageObject;
+import com.olyv.wortschatz.appium.pages.editor.AdjectivePageObject;
+import com.olyv.wortschatz.appium.pages.editor.VerbPageObject;
 import com.olyv.wortschatz.appium.pages.manager.ListOfWordsScreen;
 import org.testng.annotations.Test;
 
@@ -21,8 +21,8 @@ public class WordManagerTest extends BaseTest {
     private StartScreen startScreen;
     private ListOfWordsScreen managerScreen;
     private EditorScreen editorScreen;
-    private TranslationWordPageObject translationWordEditor;
-    private VerbWordPageObject verbWordPageObject;
+    private AdjectivePageObject adjectivePageObject;
+    private VerbPageObject verbPageObject;
 
     @Test
     public void testSearchNonExistingWord() {
@@ -56,6 +56,18 @@ public class WordManagerTest extends BaseTest {
         thenSearchReturnedNumberOfWords(0);
     }
 
+    private void givenWordIsAddedViEditor(WordType type) {
+
+        switch (type) {
+            case ADJECTIVE:
+                break;
+            case VERB:
+                break;
+            case NOUN:
+                break;
+        }
+    }
+
     private void whenWordDeletedAfterSearch(Word word) {
         startScreen.openManager();
         managerScreen = ListOfWordsScreen.init(driver);
@@ -73,8 +85,8 @@ public class WordManagerTest extends BaseTest {
         StartScreen.init(driver);
         editorScreen = startScreen.openEditor(driver);
         editorScreen.clickSpinner();
-        translationWordEditor = (TranslationWordPageObject) editorScreen
-                .selectSpinnerValue(driver, WordType.TRANSLATION)
+        adjectivePageObject = (AdjectivePageObject) editorScreen
+                .selectSpinnerValue(driver, WordType.ADJECTIVE)
                 .enterWord(adjective.getWord())
                 .enterTranslation(adjective.getTranslation())
                 .saveWord();
@@ -85,12 +97,12 @@ public class WordManagerTest extends BaseTest {
         editorScreen = startScreen.openEditor(driver);
 
         editorScreen.clickSpinner();
-        verbWordPageObject = (VerbWordPageObject) editorScreen.selectSpinnerValue(driver, WordType.VERB);
-        verbWordPageObject.enterWord(verb.getWord())
+        verbPageObject = (VerbPageObject) editorScreen.selectSpinnerValue(driver, WordType.VERB);
+        verbPageObject.enterWord(verb.getWord())
                 .enterTranslation(verb.getTranslation())
-                .saveWord()
                 .enterPartizip(verb.getPartizip())
-                .selectAuxVerb(verb.getAuxverb());
+                .selectAuxVerb(verb.getAuxverb())
+                .saveWord();
     }
 
     private Word getSomeAdjective() {

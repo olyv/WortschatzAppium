@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.function.Supplier;
 
-import static com.olyv.wortschatz.appium.entity.WordType.TRANSLATION;
+import static com.olyv.wortschatz.appium.entity.WordType.ADJECTIVE;
 import static com.olyv.wortschatz.appium.entity.WordType.VERB;
 
 public class EditorScreen {
@@ -53,8 +53,8 @@ public class EditorScreen {
 
     private IEditor getFragmentInstance(AppiumDriver driver, WordType type) {
         Map<WordType, Supplier<IEditor>> init = Map.of(
-                TRANSLATION, TranslationWordPageObject::new,
-                VERB, VerbWordPageObject::new
+                ADJECTIVE, AdjectivePageObject::new,
+                VERB, VerbPageObject::new
         );
 
         IEditor fragment = init.get(type).get();
