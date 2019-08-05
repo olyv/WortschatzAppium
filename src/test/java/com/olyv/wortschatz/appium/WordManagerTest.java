@@ -5,8 +5,8 @@ import com.olyv.wortschatz.appium.entity.Verb;
 import com.olyv.wortschatz.appium.entity.Word;
 import com.olyv.wortschatz.appium.entity.WordType;
 import com.olyv.wortschatz.appium.pages.StartScreen;
-import com.olyv.wortschatz.appium.pages.editor.EditorScreen;
 import com.olyv.wortschatz.appium.pages.editor.AdjectivePageObject;
+import com.olyv.wortschatz.appium.pages.editor.EditorScreen;
 import com.olyv.wortschatz.appium.pages.editor.VerbPageObject;
 import com.olyv.wortschatz.appium.pages.manager.ListOfWordsScreen;
 import org.testng.annotations.Test;
@@ -23,6 +23,8 @@ public class WordManagerTest extends BaseTest {
     private EditorScreen editorScreen;
     private AdjectivePageObject adjectivePageObject;
     private VerbPageObject verbPageObject;
+    private Verb someVerb;
+    private Word someAdjective;
 
     @Test
     public void testSearchNonExistingWord() {
@@ -33,8 +35,7 @@ public class WordManagerTest extends BaseTest {
 
     @Test
     public void testSearchSingleWord() {
-        var someAdjective = getSomeAdjective();
-        givenAdjectiveIsAddedViaEditor(someAdjective);
+        wordIsAddedViaEditor(WordType.ADJECTIVE);
         givenManagerScreenIsOpened();
         whenSearchForWord(someAdjective.getWord());
         thenSearchReturnedNumberOfWords(1);
@@ -42,10 +43,46 @@ public class WordManagerTest extends BaseTest {
 
     @Test
     public void testDeleteWord() {
-        var someVerb = getSomeVerb();
-        givenVerbIsAddedViaEditor(someVerb);
+        wordIsAddedViaEditor(WordType.VERB);
         whenWordDeletedAfterSearch(someVerb);
         thenSearchReturnedNumberOfWords(0);
+    }
+
+    private void wordIsAddedViaEditor(WordType type) {
+        switch (type) {
+            case ADJECTIVE:
+                someAdjective = getSomeAdjective();
+                adjectiveIsAddedViaEditor(someAdjective);
+                break;
+            case VERB:
+                someVerb = getSomeVerb();
+                addVerbViaEditor(someVerb);
+                break;
+        }
+    }
+
+    private void openEditor() {
+        this.startScreen = StartScreen.init(driver);
+        this.editorScreen = this.startScreen.openEditor(driver);
+        this.editorScreen.clickSpinner();
+    }
+
+    private void adjectiveIsAddedViaEditor(Word adjective) {
+        openEditor();
+        this.adjectivePageObject = (AdjectivePageObject) this.editorScreen.selectSpinnerValue(driver, WordType.ADJECTIVE);
+        this.adjectivePageObject.enterWord(adjective.getWord());
+        this.adjectivePageObject.enterTranslation(adjective.getTranslation());
+        this.adjectivePageObject.saveWord();
+    }
+
+    private void addVerbViaEditor(Verb verb) {
+        openEditor();
+        this.verbPageObject = (VerbPageObject) this.editorScreen.selectSpinnerValue(driver, WordType.VERB);
+        this.verbPageObject.enterWord(verb.getWord());
+        this.verbPageObject.enterTranslation(verb.getTranslation());
+        this.verbPageObject.enterPartizip(verb.getPartizip());
+        this.verbPageObject.selectAuxVerb(verb.getAuxverb());
+        this.verbPageObject.saveWord();
     }
 
     private void whenWordDeletedAfterSearch(Word word) {
@@ -59,29 +96,6 @@ public class WordManagerTest extends BaseTest {
         this.startScreen = StartScreen.init(driver);
         this.startScreen.openManager();
         this.managerScreen = ListOfWordsScreen.init(driver);
-    }
-
-    private void givenAdjectiveIsAddedViaEditor(Word adjective){
-        StartScreen.init(driver);
-        this.editorScreen = startScreen.openEditor(driver);
-        this.editorScreen.clickSpinner();
-        this.adjectivePageObject = (AdjectivePageObject) editorScreen.selectSpinnerValue(driver, WordType.ADJECTIVE);
-        this.adjectivePageObject.enterWord(adjective.getWord());
-        this.adjectivePageObject.enterTranslation(adjective.getTranslation());
-        this.adjectivePageObject.saveWord();
-    }
-
-    private void givenVerbIsAddedViaEditor(Verb verb){
-        this.startScreen = StartScreen.init(driver);
-        this.editorScreen = this.startScreen.openEditor(driver);
-
-        this.editorScreen.clickSpinner();
-        this.verbPageObject = (VerbPageObject) editorScreen.selectSpinnerValue(driver, WordType.VERB);
-        this.verbPageObject.enterWord(verb.getWord());
-        this.verbPageObject.enterTranslation(verb.getTranslation());
-        this.verbPageObject.enterPartizip(verb.getPartizip());
-        this.verbPageObject.selectAuxVerb(verb.getAuxverb());
-        this.verbPageObject.saveWord();
     }
 
     private Word getSomeAdjective() {
