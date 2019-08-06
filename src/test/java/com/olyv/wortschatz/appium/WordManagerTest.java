@@ -62,10 +62,10 @@ public class WordManagerTest extends BaseTest {
     }
 
     private void givenAdjectiveIsAddedViaEditor(Word adjective){
-        StartScreen.init(driver);
+        this.startScreen = StartScreen.init(driver);
         this.editorScreen = startScreen.openEditor(driver);
         this.editorScreen.clickSpinner();
-        this.adjectivePageObject = (AdjectivePageObject) editorScreen.selectSpinnerValue(driver, WordType.ADJECTIVE);
+        this.adjectivePageObject = (AdjectivePageObject) this.editorScreen.selectSpinnerValue(driver, WordType.ADJECTIVE);
         this.adjectivePageObject.enterWord(adjective.getWord());
         this.adjectivePageObject.enterTranslation(adjective.getTranslation());
         this.adjectivePageObject.saveWord();
@@ -76,7 +76,7 @@ public class WordManagerTest extends BaseTest {
         this.editorScreen = this.startScreen.openEditor(driver);
 
         this.editorScreen.clickSpinner();
-        this.verbPageObject = (VerbPageObject) editorScreen.selectSpinnerValue(driver, WordType.VERB);
+        this.verbPageObject = (VerbPageObject) this.editorScreen.selectSpinnerValue(driver, WordType.VERB);
         this.verbPageObject.enterWord(verb.getWord());
         this.verbPageObject.enterTranslation(verb.getTranslation());
         this.verbPageObject.enterPartizip(verb.getPartizip());
