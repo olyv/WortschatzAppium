@@ -11,16 +11,17 @@ public class StartScreen {
 
     @FindBy(id = "addLessonItemBtn")
     private WebElement newWordButton;
-
     @FindBy(id = "manageLessonItemsBtn")
     private WebElement manageWordsButton;
-
     @FindBy(id = "settings")
     private WebElement settingsActionBarMenu;
+    private static StartScreen startScreen;
 
     public static StartScreen init(AppiumDriver driver) {
-        var startScreen = new StartScreen();
-        PageFactory.initElements(new AppiumFieldDecorator(driver), startScreen);
+        if (startScreen == null) {
+            startScreen = new StartScreen();
+            PageFactory.initElements(new AppiumFieldDecorator(driver), startScreen);
+        }
         return startScreen;
     }
 

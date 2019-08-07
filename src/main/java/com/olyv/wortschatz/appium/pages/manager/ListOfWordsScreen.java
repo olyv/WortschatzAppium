@@ -15,22 +15,21 @@ public class ListOfWordsScreen {
 
     @FindBy(id = "action_search")
     private MobileElement searchWidgetIcon;
-
     @FindBy(id = "android:id/search_src_text")
     private MobileElement searchWidgetInput;
-
     @FindBy(id = "foundItemTranslation")
     private List<MobileElement> listOfResults;
-
     @AndroidFindBy(uiAutomator = "new UiSelector().text(\"Remove this record\")")
     private MobileElement deleteWordMenu;
-
     @FindBy(id = "android:id/button1")
     private MobileElement dialogOkButton;
+    private static ListOfWordsScreen managerScreen;
 
     public static ListOfWordsScreen init(AppiumDriver driver) {
-        var managerScreen = new ListOfWordsScreen();
-        PageFactory.initElements(new AppiumFieldDecorator(driver), managerScreen);
+        if (managerScreen == null) {
+            managerScreen = new ListOfWordsScreen();
+            PageFactory.initElements(new AppiumFieldDecorator(driver), managerScreen);
+        }
         return managerScreen;
     }
 
@@ -52,8 +51,7 @@ public class ListOfWordsScreen {
     private void longPressResult(AppiumDriver driver, MobileElement element) {
         var point = getElementPointToPress(element);
         var action = new TouchAction(driver);
-        action.longPress(point);
-        action.perform();
+        action.longPress(point).perform();
     }
 
     private PointOption getElementPointToPress(MobileElement element) {
