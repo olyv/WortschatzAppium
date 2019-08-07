@@ -1,5 +1,6 @@
 ### Appium based tests for Wortschatz android application
 
+https://play.google.com/store/apps/details?id=com.olyv.wortschatz.ui
 
 #### prerequisites:
  - JDK-11
