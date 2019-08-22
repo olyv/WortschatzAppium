@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.*;
-import static io.appium.java_client.remote.AutomationName.ANDROID_UIAUTOMATOR2;
+import static io.appium.java_client.remote.AutomationName.ESPRESSO;
 import static io.appium.java_client.remote.MobileCapabilityType.*;
 import static org.openqa.selenium.remote.CapabilityType.PLATFORM_NAME;
 
@@ -20,7 +20,7 @@ public class Driver {
     private static final String PATH_TO_APK = "./src/main/resources";
     private static final String APK_NAME = "app-debug.apk";
     private static final String APP_PACKAGE_VALUE = "com.olyv.wortschatz.ui";
-    private static final String APP_ACTIVITY_VALUE = ".StartActivity";
+    private static final String APP_ACTIVITY_VALUE = "com.olyv.wortschatz.ui.StartActivity";
     private static final File APPLICATION_FILE = new File(PATH_TO_APK, APK_NAME);
     private static final long DRIVER_IMPLICIT_TIMEOUT_IN_SECONDS = 30;
     private static final String SKIP_UNLOCK = "skipUnlock";
@@ -51,7 +51,7 @@ public class Driver {
         capabilities.setCapability((SKIP_UNLOCK), true);
         capabilities.setCapability((DISABLE_WINDOW_ANIMATION), true);
         capabilities.setCapability(ANDROID_DEVICE_READY_TIMEOUT, 120);
-        capabilities.setCapability(AUTOMATION_NAME, ANDROID_UIAUTOMATOR2);
+        capabilities.setCapability(AUTOMATION_NAME, ESPRESSO);
         capabilities.setCapability(AVD_ARGS, "-no-boot-anim");
         return capabilities;
     }

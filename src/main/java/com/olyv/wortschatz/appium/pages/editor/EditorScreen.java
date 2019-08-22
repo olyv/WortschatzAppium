@@ -37,7 +37,7 @@ public class EditorScreen {
     public IEditor selectSpinnerValue(AppiumDriver driver, WordType spinnerValue) {
 
         var spinnerEntries = driver
-                .findElement(By.className("android.widget.ListView"))
+                .findElement(By.className("android.widget.DropDownListView"))
                 .findElements(By.className("android.widget.TextView"));
 
         spinnerEntries.stream()

@@ -19,7 +19,7 @@ public class ListOfWordsScreen {
     private MobileElement searchWidgetInput;
     @FindBy(id = "foundItemTranslation")
     private List<MobileElement> listOfResults;
-    @AndroidFindBy(uiAutomator = "new UiSelector().text(\"Remove this record\")")
+    @FindBy(xpath = "//*[@text='Remove this record']")
     private MobileElement deleteWordMenu;
     @FindBy(id = "android:id/button1")
     private MobileElement dialogOkButton;
@@ -35,7 +35,7 @@ public class ListOfWordsScreen {
 
     public void search(String criterion) {
         searchWidgetIcon.click();
-        searchWidgetInput.setValue(criterion);
+        searchWidgetInput.sendKeys(criterion);
     }
 
     public int quantityOfFoundWords() {

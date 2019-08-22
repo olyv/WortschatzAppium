@@ -7,7 +7,7 @@ import java.io.File;
 
 public class AppiumService {
 
-    private static final String APPIUM_SERVER_ADDRESS = "0.0.0.0";
+    private static final String APPIUM_SERVER_ADDRESS = "127.0.0.1";
     private static final int APPIUM_SERVER_PORT = 4724;
     private static final String NODEJS_PATH = System.getProperty("nodejsPath");
     private static final String APPIUM_PATH = System.getProperty("appiumPath");
